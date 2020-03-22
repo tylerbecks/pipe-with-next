@@ -1,27 +1,29 @@
-/** @jsx jsx */
-import { css, jsx } from "@emotion/core";
 import * as React from "react";
-import Header from "./Header";
+import { Main } from "grommet";
 import Head from "next/head";
+import Header from "./Header";
 
 type Props = {
   title: string;
 };
 
-const style = css`
-  padding: 40px 100px;
-`;
-
 const Layout: React.FunctionComponent<Props> = ({ children, title }) => (
-  <div>
+  <>
     <Head>
       <title>{title}</title>
       <meta charSet="utf-8" />
       <meta name="viewport" content="initial-scale=1.0, width=device-width" />
     </Head>
     <Header />
-    <div css={style}>{children}</div>
-  </div>
+    <Main
+      pad={{
+        vertical: "medium",
+        horizontal: "xlarge"
+      }}
+    >
+      {children}
+    </Main>
+  </>
 );
 
 export default Layout;
