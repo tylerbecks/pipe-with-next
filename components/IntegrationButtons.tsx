@@ -36,6 +36,11 @@ const CircleButton: React.FunctionComponent<{
       text-align: center;
       font-weight: bold;
       cursor: pointer;
+      transition: all 0.3s ease;
+
+      &:hover {
+        transform: scale(1.2) perspective(1px);
+      }
     `}
     onClick={onClick}
   >
