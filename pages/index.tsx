@@ -34,15 +34,17 @@ const IndexPage: NextPage<{}> = () => {
 
   return (
     <Layout title="Pipe | Sync Inbox 💌">
-      <Box align="center" direction="row">
-        <h3
-          css={css`
-            margin-right: 10px;
-          `}
-        >
-          Sync Inbox
-        </h3>
-        <Badge content={`PipeLine: ${currencyFormatter.format(TOTAL_PIPED)}`} />
+      <Box align="center" direction="row" justify="between">
+        <Box align="center" direction="row">
+          <h3
+            css={css`
+              margin-right: 10px;
+            `}
+          >
+            Sync Inbox
+          </h3>
+          <Badge content={`PipeLine: ${currencyFormatter.format(TOTAL_PIPED)}`} />
+        </Box>
         <IntegrationButtons integrations={INTEGRATIONS} />
       </Box>
       <Box

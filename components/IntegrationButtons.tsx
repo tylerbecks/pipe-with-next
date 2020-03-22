@@ -1,25 +1,22 @@
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 import * as React from "react";
+import { Box, Text } from "grommet";
 
 const handleClick = () => {
   console.log("Hey! You clicked me.");
 };
 
 const IntegrationButtons: React.FunctionComponent<{ integrations: Array<string> }> = ({ integrations }) => (
-  <div
-    css={css`
-      & button {
-        margin-right: 10px;
-      }
-    `}
-  >
-    <span>Integrations</span>
+  <Box direction="row" align="center" gap="small">
+    <Text size="small" color="gray">
+      Integrations
+    </Text>
     {integrations.map(integration => (
       <CircleButton styles={{ background: "black", color: "white" }} content={integration} onClick={handleClick} />
     ))}
     <CircleButton styles={{ background: "white", color: "blue" }} content="+" onClick={handleClick} />
-  </div>
+  </Box>
 );
 
 export default IntegrationButtons;
