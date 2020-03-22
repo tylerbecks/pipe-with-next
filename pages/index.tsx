@@ -2,6 +2,7 @@
 import { css, jsx } from "@emotion/core";
 import { NextPage } from "next";
 import useSWR from "swr";
+import { Box, Grid } from "grommet";
 import Layout from "../components/Layout";
 import Table from "../components/Table";
 import Badge from "../components/Badge";
@@ -19,6 +20,14 @@ const currencyFormatter = new Intl.NumberFormat("en-US", {
 
 const IndexPage: NextPage<{}> = () => {
   const { data: subscriptions, error } = useSWR("/api/subscriptions", fetcher);
+
+  if (error) {
+    return <div>There was an error, please try again!</div>;
+  }
+
+  if (!subscriptions) {
+    return <div>You don't have any subscriptions. Please sync your provider.</div>;
+  }
 
   return (
     <Layout title="Pipe | Sync Inbox 💌">
@@ -39,8 +48,30 @@ const IndexPage: NextPage<{}> = () => {
         <Badge content={`PipeLine: ${currencyFormatter.format(TOTAL_PIPED)}`} />
         <IntegrationButtons integrations={INTEGRATIONS} />
       </div>
-      {error && <div>There was an error, please try again!</div>}
-      {subscriptions && <Table data={subscriptions} />}
+      <Grid
+        columns={["50%", "50%"]}
+        rows={["auto", "auto", "auto"]}
+        areas={[
+          { name: "mrr", start: [0, 0], end: [0, 0] },
+          { name: "total", start: [1, 0], end: [1, 0] },
+          { name: "collapse", start: [0, 1], end: [1, 1] },
+          { name: "table", start: [0, 2], end: [1, 2] }
+        ]}
+        fill="horizontal"
+      >
+        <Box gridArea="mrr">
+          <div>One</div>
+        </Box>
+        <Box gridArea="total">
+          <div>Two</div>
+        </Box>
+        <Box gridArea="collapse">
+          <div>Hide</div>
+        </Box>
+        <Box gridArea="table">
+          <Table data={subscriptions} />
+        </Box>
+      </Grid>
     </Layout>
   );
 };
