@@ -67,6 +67,8 @@ const IndexPage: NextPage<{}> = () => {
           <Box
             css={css`
               border-top-left-radius: ${BORDER_RADIUS};
+              border-right: 1px solid ${LIGHT_GRAY};
+              border-bottom: 1px solid ${LIGHT_GRAY};
             `}
             gridArea="mrr"
             background="white"
@@ -79,6 +81,7 @@ const IndexPage: NextPage<{}> = () => {
           <Box
             css={css`
               border-top-right-radius: ${BORDER_RADIUS};
+              border-bottom: 1px solid ${LIGHT_GRAY};
             `}
             gridArea="total"
             background="white"
@@ -91,7 +94,9 @@ const IndexPage: NextPage<{}> = () => {
           <Box
             align="center"
             justify="center"
-            css={css``}
+            css={css`
+              border-bottom: 1px solid ${LIGHT_GRAY};
+            `}
             gridArea="collapse"
             background="white"
             pad={{ vertical: "small", horizontal: "medium" }}
