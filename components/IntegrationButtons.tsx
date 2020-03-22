@@ -16,28 +16,29 @@ const IntegrationButtons: React.FunctionComponent<{ integrations: Array<string> 
   >
     <span>Integrations</span>
     {integrations.map(integration => (
-      <CircleButton color="white" background="black" content={integration} onClick={handleClick} />
+      <CircleButton styles={{ background: "black", color: "white" }} content={integration} onClick={handleClick} />
     ))}
-    <CircleButton color="blue" background="white" content="+" onClick={handleClick} />
+    <CircleButton styles={{ background: "white", color: "blue" }} content="+" onClick={handleClick} />
   </div>
 );
 
 export default IntegrationButtons;
 
 const CircleButton: React.FunctionComponent<{
-  background: string;
-  color: string;
+  styles: {};
   content: string;
   onClick: () => void;
-}> = ({ background, color, content, onClick }) => (
+}> = ({ styles, content, onClick }) => (
   <button
     css={css`
-      background: ${background};
-      color: ${color};
+      ${styles}
       border-radius: 100%;
-      box-shadow: 16px 17px 20px -22px rgba(140, 140, 140, 1);
       width: 40px;
       height: 40px;
+      font-size: 0.6rem;
+      text-align: center;
+      font-weight: bold;
+      cursor: pointer;
     `}
     onClick={onClick}
   >
