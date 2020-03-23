@@ -6,6 +6,7 @@ export type Subscription = {
   startDate: Date;
   status: string;
   syncedFrom: string;
+  isSelected: boolean;
 };
 
 export type SubscriptionRaw = {

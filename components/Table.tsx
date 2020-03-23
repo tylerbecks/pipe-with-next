@@ -2,6 +2,7 @@ import moment from "moment";
 import DataTable from "react-data-table-component";
 import { Subscription } from "../interfaces/subscription";
 import Badge from "./Badge";
+import { formatCurrency } from "../utils/format";
 
 const COLUMNS = [
   {
@@ -13,6 +14,7 @@ const COLUMNS = [
     name: "Status",
     selector: "status",
     sortable: true,
+    allowOverflow: true,
     format: (row: Subscription) => <Badge content={row.status} />
   },
   {
@@ -40,14 +42,29 @@ const COLUMNS = [
   {
     name: "Monthly Revenue",
     selector: "mrr",
-    sortable: true
+    sortable: true,
+    format: (row: Subscription) => formatCurrency(row.mrr)
   }
 ];
 
 interface Props {
   data: Array<Subscription>;
+  onSelectRows: (rows: Array<Subscription>) => void;
 }
 
-const Table: React.FunctionComponent<Props> = ({ data }) => <DataTable columns={COLUMNS} data={data} />;
+const Table: React.FunctionComponent<Props> = ({ data, onSelectRows }) => (
+  <DataTable
+    onSelectedRowsChange={({ selectedRows }: any) => {
+      onSelectRows(selectedRows);
+    }}
+    selectableRowSelected={(row: Subscription) => row.isSelected}
+    noContextMenu
+    highlightOnHover
+    selectableRowsHighlight
+    selectableRows
+    columns={COLUMNS}
+    data={data}
+  />
+);
 
 export default Table;
