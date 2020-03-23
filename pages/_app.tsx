@@ -2,6 +2,7 @@
 import { css, jsx, Global } from "@emotion/core";
 import { AppProps } from "next/app";
 import { Grommet } from "grommet";
+import { BRAND } from "../styles/colors";
 
 const fontFamily = "Gilroy, sans-serif";
 
@@ -13,8 +14,14 @@ const MyApp = ({ Component, pageProps }: AppProps) => (
           family: fontFamily
         },
         colors: {
-          brand: "#0a8de5"
+          brand: BRAND
         }
+      },
+      button: {
+        border: {
+          radius: "5px"
+        },
+        padding: { horizontal: "300px", vertical: "1.5rem" }
       }
     }}
   >

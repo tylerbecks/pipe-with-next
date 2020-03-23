@@ -1,17 +1,20 @@
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
+import { useState } from "react";
 import { NextPage } from "next";
 import useSWR from "swr";
 import { LIGHT_GRAY } from "../styles/colors";
-import { Box, Grid } from "grommet";
+import { Box, Grid, Heading } from "grommet";
 import Layout from "../components/Layout";
 import Table from "../components/Table";
 import Badge from "../components/Badge";
+import MRRCard from "../components/MRRCard";
+import ARRCard from "../components/ARRCard";
 import IntegrationButtons from "../components/IntegrationButtons";
+import { Subscription } from "../interfaces/subscription";
 
 const TOTAL_PIPED = 300600;
 const INTEGRATIONS = ["zuora"];
-
 const BORDER_RADIUS = "5px";
 
 const fetcher = (url: string) => fetch(url).then(r => r.json());
@@ -22,6 +25,7 @@ const currencyFormatter = new Intl.NumberFormat("en-US", {
 });
 
 const IndexPage: NextPage<{}> = () => {
+  const [selectedSubscriptions, setSelectedSubscriptions] = useState([] as Array<Subscription>);
   const { data: subscriptions, error } = useSWR("/api/subscriptions", fetcher);
 
   if (error) {
@@ -32,17 +36,44 @@ const IndexPage: NextPage<{}> = () => {
     return <div>You don't have any subscriptions. Please sync your provider.</div>;
   }
 
+  const getTotalSelectedMrr = () => selectedSubscriptions.reduce((prevSum, curSub) => prevSum + curSub.mrr, 0);
+
+  const handleSlideSelector = (delta: number) => {
+    if (delta === 0) {
+      return;
+    }
+
+    if (delta < 0) {
+      // delta is negative here, so we add, not subtract
+      return setSelectedSubscriptions(selectedSubscriptions.slice(0, selectedSubscriptions.length + delta));
+    }
+
+    const newSelectedSubscriptions = selectedSubscriptions.slice();
+    let remainingDelta = delta;
+
+    for (const s of subscriptions) {
+      if (newSelectedSubscriptions.find(element => element === s)) {
+        continue;
+      }
+
+      newSelectedSubscriptions.push(s);
+      remainingDelta--;
+
+      if (remainingDelta === 0) {
+        return setSelectedSubscriptions(newSelectedSubscriptions);
+      }
+    }
+  };
+
+  const totalMRR = getTotalSelectedMrr();
+
   return (
     <Layout title="Pipe | Sync Inbox 💌">
       <Box align="center" direction="row" justify="between">
         <Box align="center" direction="row">
-          <h3
-            css={css`
-              margin-right: 10px;
-            `}
-          >
+          <Heading level={3} margin={{ right: "10px" }}>
             Sync Inbox
-          </h3>
+          </Heading>
           <Badge content={`PipeLine: ${currencyFormatter.format(TOTAL_PIPED)}`} />
         </Box>
         <IntegrationButtons integrations={INTEGRATIONS} />
@@ -72,11 +103,14 @@ const IndexPage: NextPage<{}> = () => {
             `}
             gridArea="mrr"
             background="white"
-            align="center"
-            justify="center"
-            pad={{ vertical: "small", horizontal: "medium" }}
+            pad="large"
           >
-            <div>One</div>
+            <MRRCard
+              totalFormattedMRR={currencyFormatter.format(totalMRR)}
+              onSlideSelector={handleSlideSelector}
+              selectedCount={selectedSubscriptions.length}
+              totalCount={subscriptions.length}
+            />
           </Box>
           <Box
             css={css`
@@ -85,11 +119,12 @@ const IndexPage: NextPage<{}> = () => {
             `}
             gridArea="total"
             background="white"
-            align="center"
-            justify="center"
-            pad={{ vertical: "small", horizontal: "medium" }}
+            pad="large"
           >
-            <div>Two</div>
+            <ARRCard
+              totalFormattedARR={currencyFormatter.format(totalMRR * 10)}
+              selectedCount={selectedSubscriptions.length}
+            />
           </Box>
           <Box
             align="center"
