@@ -3,19 +3,20 @@ import { css, jsx } from "@emotion/core";
 import { Box, Heading, Text, Button } from "grommet";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import { formatCurrency } from "../utils/format";
 
 interface Props {
-  totalFormattedARR: string;
+  totalARR: number;
   selectedCount: number;
 }
 
-const ARRCard: React.FunctionComponent<Props> = ({ totalFormattedARR, selectedCount }) => (
+const ARRCard: React.FunctionComponent<Props> = ({ totalARR, selectedCount }) => (
   <Box align="center">
     <Heading level={6} margin="none">
       Total Piped Subscriptions
     </Heading>
     <Heading level={2} margin="small">
-      {totalFormattedARR}
+      {formatCurrency(totalARR)}
     </Heading>
     <Text size="xsmall">{`${selectedCount} Subscriptions`}</Text>
     <Button

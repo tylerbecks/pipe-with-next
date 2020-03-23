@@ -12,17 +12,13 @@ import MRRCard from "../components/MRRCard";
 import ARRCard from "../components/ARRCard";
 import IntegrationButtons from "../components/IntegrationButtons";
 import { Subscription } from "../interfaces/subscription";
+import { formatCurrency } from "../utils/format";
 
 const TOTAL_PIPED = 300600;
 const INTEGRATIONS = ["zuora"];
 const BORDER_RADIUS = "5px";
 
 const fetcher = (url: string) => fetch(url).then(r => r.json());
-
-const currencyFormatter = new Intl.NumberFormat("en-US", {
-  style: "currency",
-  currency: "USD"
-});
 
 const IndexPage: NextPage<{}> = () => {
   const [selectedSubscriptions, setSelectedSubscriptions] = useState([] as Array<Subscription>);
@@ -74,7 +70,7 @@ const IndexPage: NextPage<{}> = () => {
           <Heading level={3} margin={{ right: "10px" }}>
             Sync Inbox
           </Heading>
-          <Badge content={`PipeLine: ${currencyFormatter.format(TOTAL_PIPED)}`} />
+          <Badge content={`PipeLine: ${formatCurrency(TOTAL_PIPED)}`} />
         </Box>
         <IntegrationButtons integrations={INTEGRATIONS} />
       </Box>
@@ -106,7 +102,7 @@ const IndexPage: NextPage<{}> = () => {
             pad="large"
           >
             <MRRCard
-              totalFormattedMRR={currencyFormatter.format(totalMRR)}
+              totalMRR={totalMRR}
               onSlideSelector={handleSlideSelector}
               selectedCount={selectedSubscriptions.length}
               totalCount={subscriptions.length}
@@ -121,10 +117,7 @@ const IndexPage: NextPage<{}> = () => {
             background="white"
             pad="large"
           >
-            <ARRCard
-              totalFormattedARR={currencyFormatter.format(totalMRR * 10)}
-              selectedCount={selectedSubscriptions.length}
-            />
+            <ARRCard totalARR={totalMRR * 10} selectedCount={selectedSubscriptions.length} />
           </Box>
           <Box
             align="center"

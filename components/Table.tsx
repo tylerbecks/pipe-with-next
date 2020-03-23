@@ -1,5 +1,7 @@
+import moment from "moment";
 import DataTable from "react-data-table-component";
 import { Subscription } from "../interfaces/subscription";
+import Badge from "./Badge";
 
 const COLUMNS = [
   {
@@ -10,7 +12,8 @@ const COLUMNS = [
   {
     name: "Status",
     selector: "status",
-    sortable: true
+    sortable: true,
+    format: (row: Subscription) => <Badge content={row.status} />
   },
   {
     name: "Invoice No.",
@@ -25,12 +28,14 @@ const COLUMNS = [
   {
     name: "Start Date",
     selector: "startDate",
-    sortable: true
+    sortable: true,
+    format: (row: Subscription) => moment(row.startDate).format("MMM D, YYYY")
   },
   {
     name: "End Date",
     selector: "endDate",
-    sortable: true
+    sortable: true,
+    format: (row: Subscription) => moment(row.endDate).format("MMM D, YYYY")
   },
   {
     name: "Monthly Revenue",
