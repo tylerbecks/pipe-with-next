@@ -14,7 +14,6 @@ import IntegrationButtons from "../components/IntegrationButtons";
 import { Subscription } from "../interfaces/subscription";
 import { formatCurrency } from "../utils/format";
 
-const TOTAL_PIPED = 300600;
 const INTEGRATIONS = ["zuora"];
 const BORDER_RADIUS = "5px";
 
@@ -73,6 +72,8 @@ const IndexPage: NextPage<{}> = () => {
     return prevSum;
   }, 0);
 
+  const totalPipeline = subscriptions.reduce((prevSum, curSub) => prevSum + curSub.mrr, 0);
+
   const selectedCount = subscriptions.reduce((prevSum, curSub) => {
     if (curSub.isSelected) {
       return prevSum + 1;
@@ -99,7 +100,7 @@ const IndexPage: NextPage<{}> = () => {
           <Heading level={3} margin={{ right: "10px" }}>
             Sync Inbox
           </Heading>
-          <Badge content={`PipeLine: ${formatCurrency(TOTAL_PIPED)}`} />
+          <Badge content={`PipeLine: ${formatCurrency(totalPipeline)}`} />
         </Box>
         <IntegrationButtons integrations={INTEGRATIONS} />
       </Box>
@@ -146,7 +147,13 @@ const IndexPage: NextPage<{}> = () => {
             background="white"
             pad="large"
           >
-            <ARRCard totalARR={totalMRR * 10} selectedCount={selectedCount} />
+            <ARRCard
+              totalARR={totalMRR * 10}
+              selectedCount={selectedCount}
+              onPipe={() => {
+                handleSelectRows([]);
+              }}
+            />
           </Box>
           <Box
             align="center"

@@ -8,9 +8,10 @@ import { formatCurrency } from "../utils/format";
 interface Props {
   totalARR: number;
   selectedCount: number;
+  onPipe: () => void;
 }
 
-const ARRCard: React.FunctionComponent<Props> = ({ totalARR, selectedCount }) => (
+const ARRCard: React.FunctionComponent<Props> = ({ totalARR, selectedCount, onPipe }) => (
   <Box align="center">
     <Heading level={6} margin="none">
       Total Piped Subscriptions
@@ -21,8 +22,9 @@ const ARRCard: React.FunctionComponent<Props> = ({ totalARR, selectedCount }) =>
     <Text size="xsmall">{`${selectedCount} Subscriptions`}</Text>
     <Button
       primary
+      onClick={onPipe}
       css={css`
-        padding: 1rem 2rem;
+        padding: 1rem 2rem !important;
         font-size: 0.8rem;
         font-weight: bold;
         margin-top: 1rem;
