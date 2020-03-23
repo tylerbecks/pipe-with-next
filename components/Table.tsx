@@ -59,6 +59,7 @@ const Table: React.FunctionComponent<Props> = ({ data, onSelectRows }) => (
     }}
     selectableRowSelected={(row: Subscription) => row.isSelected}
     noContextMenu
+    noHeader
     highlightOnHover
     selectableRowsHighlight
     selectableRows

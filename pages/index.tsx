@@ -113,12 +113,11 @@ const IndexPage: NextPage<{}> = () => {
       >
         <Grid
           columns={["50%", "50%"]}
-          rows={["30%", "10%", "50%"]}
+          rows={["30%", "70%"]}
           areas={[
             { name: "mrr", start: [0, 0], end: [0, 0] },
             { name: "total", start: [1, 0], end: [1, 0] },
-            { name: "collapse", start: [0, 1], end: [1, 1] },
-            { name: "table", start: [0, 2], end: [1, 2] }
+            { name: "table", start: [0, 1], end: [1, 1] }
           ]}
         >
           <Box
@@ -154,18 +153,6 @@ const IndexPage: NextPage<{}> = () => {
                 handleSelectRows([]);
               }}
             />
-          </Box>
-          <Box
-            align="center"
-            justify="center"
-            css={css`
-              border-bottom: 1px solid ${LIGHT_GRAY};
-            `}
-            gridArea="collapse"
-            background="white"
-            pad={{ vertical: "small", horizontal: "medium" }}
-          >
-            <div>Hide</div>
           </Box>
           <Box
             css={css`
