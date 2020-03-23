@@ -12,7 +12,7 @@ const style = css`
 `;
 
 type Props = {
-  content: string;
+  content: React.ReactNode;
 };
 
 const Header: React.FunctionComponent<Props> = ({ content }) => <span css={style}>{content}</span>;

@@ -13,7 +13,12 @@ const IntegrationButtons: React.FunctionComponent<{ integrations: Array<string> 
       Integrations
     </Text>
     {integrations.map(integration => (
-      <CircleButton styles={{ background: "black", color: "white" }} content={integration} onClick={handleClick} />
+      <CircleButton
+        key={integration}
+        styles={{ background: "black", color: "white" }}
+        content={integration}
+        onClick={handleClick}
+      />
     ))}
     <CircleButton styles={{ background: "white", color: "blue" }} content="+" onClick={handleClick} />
   </Box>

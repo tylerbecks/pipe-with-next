@@ -11,6 +11,9 @@ const MyApp = ({ Component, pageProps }: AppProps) => (
       global: {
         font: {
           family: fontFamily
+        },
+        colors: {
+          brand: "#0a8de5"
         }
       }
     }}

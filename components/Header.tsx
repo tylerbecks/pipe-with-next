@@ -1,8 +1,9 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { faSearch, faFileAlt, faSync } from "@fortawesome/free-solid-svg-icons";
 import { LIGHT_GRAY } from "../styles/colors";
+import Badge from "./Badge";
 import * as React from "react";
 import { Anchor, Button, Box, Grid, Header, Nav } from "grommet";
 import Link from "next/link";
@@ -31,9 +32,30 @@ const MyHeader: React.FunctionComponent<{}> = () => (
       </Box>
 
       <Box direction="row" justify="between" gridArea="middle" align="center" gap="small">
-        <Nav direction="row">
-          <Anchor href="#">Sync Subscriptions</Anchor>
-          <Anchor href="#">All Subscriptions</Anchor>
+        <Nav
+          direction="row"
+          css={css`
+            font-size: 0.8rem;
+          `}
+        >
+          <Anchor href="#">
+            <FontAwesomeIcon
+              css={css`
+                margin-left: auto;
+              `}
+              icon={faSync}
+            />{" "}
+            Sync Subscriptions <Badge content={85} />
+          </Anchor>
+          <Anchor href="#">
+            <FontAwesomeIcon
+              css={css`
+                margin-left: auto;
+              `}
+              icon={faFileAlt}
+            />{" "}
+            All Subscriptions
+          </Anchor>
         </Nav>
 
         <FontAwesomeIcon
